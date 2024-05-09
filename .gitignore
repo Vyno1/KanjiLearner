@@ -8,6 +8,7 @@
 /dataSources.local.xml
 # All .idea files
 /.idea/
+/KanjiLearner/.idea/
 # The build and dest folders from PyInstaller
 /KanjiLearner/build
 /KanjiLearner/dist
