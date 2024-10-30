@@ -80,19 +80,52 @@ def quiz_the_user():
     kanji_dict = read_kanji_json()
     rand_keys_list = create_quiz_list(kanji_dict)
 
-    print("What do these kanji mean?\n")
-    for index, keys in enumerate(rand_keys_list):
-        print(f"{index}. {keys}")
+    learn_method = input("Please enter if you want to learn the meanings [m] of the kanji, the kanji [k] for the meanings, or random [r]: \n")
 
-    input("\nPress Enter to continue...\n>")
-    print("The following are the meanings of the kanji:\n")
-    for index, keys in enumerate(rand_keys_list):
-        print(f"{index}. {kanji_dict[keys]}")
+    match learn_method:
+        case "m":
+            print("What do these kanji mean?\n")
+            for index, keys in enumerate(rand_keys_list):
+                print(f"{index}. {keys}")
+
+            input("\nPress Enter to continue...\n>")
+            print("The following are the meanings of the kanji:\n")
+            for index, keys in enumerate(rand_keys_list):
+                print(f"{index}. {kanji_dict[keys]}")
+        case "k":
+            print("Which kanji do these meanings belong to?\n")
+            for index, keys in enumerate(rand_keys_list):
+                print(f"{index}. {kanji_dict[keys]}")
+
+            input("\nPress Enter to continue...\n>")
+            print("The following are the kanji:\n")
+            for index, keys in enumerate(rand_keys_list):
+                print(f"{index}. {keys}")
+        case "r":
+            print("You will be shown a meaning or a kanji at random, which is the corresponding answer?\n")
+            answer_list = []
+            for index, keys in enumerate(rand_keys_list):
+                choice = random.randint(0,1)
+                if choice == 0:
+                    print(f"{index}. {keys}")
+                    answer_list.append(kanji_dict[keys])
+                else:
+                    print(f"{index}. {kanji_dict[keys]}")
+                    answer_list.append(keys)
+            input("\nPress Enter to continue...\n>")
+            print("You will now be shown the answers to the random kanji/meanings.")
+            for index, answer in enumerate(answer_list):
+                print(f"{index}. {answer}")
 
 
 if __name__ == '__main__':
     print("Welcome to your kanji learning app")
-    if check_for_kanji_json():
-        quiz_the_user()
+    con_learn = True
+    performed_check = check_for_kanji_json()
+    while con_learn:
+        if performed_check:
+            quiz_the_user()
+        if input("Do you want to continue studying? [Y/n]\n> ").lower() == "n":
+            con_learn = False
     print("\nThank you for using Kanji Learner")
     input("\nPress Enter to close...\n>")
